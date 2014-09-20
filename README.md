@@ -2,6 +2,13 @@
 
 Create docker containers for local dev and systemd templates for CoreOS deployments. Also some digital ocean stuff.
 
+## First things first
+
+Export your Digital Ocean API key and client key to your env:
+
+export DO_API_KEY=whatever
+export DO_CLIENT_KEY=whateverelse
+
 ## Generating some systemd love.
 
 Create a cloud-config to init your boxes with. Creates a token for you. Save this, put it in version control.
