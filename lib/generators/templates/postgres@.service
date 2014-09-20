@@ -1,0 +1,18 @@
+[Unit]
+Description=Postgres DB Service
+After=etcd.service
+After=docker.service
+Requires=postgres-discovery@%i.service
+
+[Service]
+TimeoutStartSec=0
+KillMode=none
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill postgres%i
+ExecStartPre=-/usr/bin/docker rm postgres%i
+ExecStartPre=/usr/bin/docker pull postgres:9.3.5
+ExecStart=/usr/bin/docker run --name postgres%i -p ${COREOS_PRIVATE_IPV4}:%i:5432 postgres:9.3.5
+ExecStop=/usr/bin/docker stop postgres%i
+
+[X-Fleet]
+X-Conflicts=postgres@*.service

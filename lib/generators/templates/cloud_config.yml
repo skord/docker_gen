@@ -1,0 +1,15 @@
+#cloud-config
+
+coreos:
+  etcd:
+    # generate token
+    discovery: <%= Net::HTTP.get(URI.parse("https://discovery.etcd.io/new")) %>
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+  fleet:
+    public-ip: $private_ipv4
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: "start"
